@@ -1,0 +1,121 @@
+Dependencies for Project 'Usart', Target 'Target 1': (DO NOT MODIFY !)
+F (..\Lib\cmsis\core_cm3.c)(0x4C0C587E)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\core_cm3.o --omf_browse .\output\core_cm3.crf --depend .\output\core_cm3.d)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+F (..\Lib\src\stm32f10x_gpio.c)(0x4D79EEC6)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\stm32f10x_gpio.o --omf_browse .\output\stm32f10x_gpio.crf --depend .\output\stm32f10x_gpio.d)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+F (..\Lib\src\stm32f10x_rcc.c)(0x4D783BB4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\stm32f10x_rcc.o --omf_browse .\output\stm32f10x_rcc.crf --depend .\output\stm32f10x_rcc.d)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+F (..\Lib\src\stm32f10x_usart.c)(0x4D783BB4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\stm32f10x_usart.o --omf_browse .\output\stm32f10x_usart.crf --depend .\output\stm32f10x_usart.d)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+F (..\Lib\src\misc.c)(0x4D783BB4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\misc.o --omf_browse .\output\misc.crf --depend .\output\misc.d)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+F (..\user\main.c)(0x5899F24B)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\main.o --omf_browse .\output\main.crf --depend .\output\main.d)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+I (..\user\usart.h)(0x4E11318E)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
+I (..\user\DHT11.h)(0x5899F24B)
+I (..\user\sys.h)(0x53F7F0A4)
+I (..\user\delay.h)(0x53F7F876)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdlib.h)(0x56FE42DE)
+F (..\user\stm32f10x_it.c)(0x4E4397D2)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\stm32f10x_it.o --omf_browse .\output\stm32f10x_it.crf --depend .\output\stm32f10x_it.d)
+I (..\user\stm32f10x_it.h)(0x4AC0A35E)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+I (..\user\usart.h)(0x4E11318E)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
+F (..\user\usart.c)(0x5899EADC)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\usart.o --omf_browse .\output\usart.crf --depend .\output\usart.d)
+I (..\user\usart.h)(0x4E11318E)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdio.h)(0x56FE42DE)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+F (..\user\system_stm32f10x.c)(0x4D783CB0)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\system_stm32f10x.o --omf_browse .\output\system_stm32f10x.crf --depend .\output\system_stm32f10x.d)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+F (..\user\DHT11.c)(0x5899EADB)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\dht11.o --omf_browse .\output\dht11.crf --depend .\output\dht11.d)
+I (..\user\dht11.h)(0x5899F24B)
+I (..\user\sys.h)(0x53F7F0A4)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+I (..\user\delay.h)(0x53F7F876)
+F (..\user\delay.c)(0x5899CE17)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o .\output\delay.o --omf_browse .\output\delay.crf --depend .\output\delay.d)
+I (..\user\delay.h)(0x53F7F876)
+I (..\user\sys.h)(0x53F7F0A4)
+I (..\Lib\cmsis\stm32f10x.h)(0x4D783CB4)
+I (..\Lib\cmsis\core_cm3.h)(0x4D523B58)
+I (E:\Soft\KEIL5&ARM\ARM\ARMCC\include\stdint.h)(0x56FE42DE)
+I (..\Lib\cmsis\system_stm32f10x.h)(0x4D783CAA)
+I (..\user\stm32f10x_conf.h)(0x4E2D28F0)
+I (..\Lib\inc\stm32f10x_gpio.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_rcc.h)(0x4D783BB4)
+I (..\Lib\inc\stm32f10x_usart.h)(0x4D783BB4)
+I (..\Lib\inc\misc.h)(0x4D783BB4)
+F (..\Lib\startup\arm\startup_stm32f10x_hd.s)(0x4D783CDE)(--cpu Cortex-M3 -g --apcs=interwork -I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include--pd "__UVISION_VERSION SETA 520" --pd "_RTE_ SETA 1" --pd "STM32F10X_HD SETA 1"--list .\startup_stm32f10x_hd.lst --xref -o .\output\startup_stm32f10x_hd.o --depend .\output\startup_stm32f10x_hd.d)
+F (..\Read me\Read me.c)(0x5899F2E9)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I ..\Lib\inc -I ..\Lib\cmsis -I ..\user -I ..\Lib-I "D:\常用模块\DHT11\Temperature-Humidity-Sensor-code\STM32F10X\Temperature-Humidity Sensor\MDK_Project\RTE"-I E:\Soft\KEIL5&ARM\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I E:\Soft\KEIL5&ARM\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-D__UVISION_VERSION="520" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD-o ".\output\read me.o" --omf_browse ".\output\read me.crf" --depend ".\output\read me.d")

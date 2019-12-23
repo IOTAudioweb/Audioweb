@@ -1,0 +1,14 @@
+.\output\delay.o: ..\user\delay.c
+.\output\delay.o: ..\user\delay.h
+.\output\delay.o: ..\user\sys.h
+.\output\delay.o: ..\Lib\cmsis\stm32f10x.h
+.\output\delay.o: ..\Lib\cmsis\core_cm3.h
+.\output\delay.o: E:\Soft\KEIL5&ARM\ARM\ARMCC\Bin\..\include\stdint.h
+.\output\delay.o: ..\Lib\cmsis\system_stm32f10x.h
+.\output\delay.o: ..\user\stm32f10x_conf.h
+.\output\delay.o: ..\Lib\inc\stm32f10x_gpio.h
+.\output\delay.o: ..\Lib\cmsis\stm32f10x.h
+.\output\delay.o: ..\Lib\inc\stm32f10x_rcc.h
+.\output\delay.o: ..\Lib\inc\stm32f10x_usart.h
+.\output\delay.o: ..\Lib\inc\misc.h
+.\output\delay.o: ..\user\sys.h
