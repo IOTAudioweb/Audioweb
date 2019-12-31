@@ -1,0 +1,510 @@
+/*--reset--*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*--start editing from here--*/
+a {
+    text-decoration: none;
+}
+
+.txt-rt {
+    text-align: right;
+}
+
+/* text align right */
+.txt-lt {
+    text-align: left;
+}
+
+/* text align left */
+.txt-center {
+    text-align: center;
+}
+
+/* text align center */
+.float-rt {
+    float: right;
+}
+
+/* float right */
+.float-lt {
+    float: left;
+}
+
+/* float left */
+.clear {
+    clear: both;
+}
+
+/* clear float */
+.pos-relative {
+    position: relative;
+}
+
+/* Position Relative */
+.pos-absolute {
+    position: absolute;
+}
+
+/* Position Absolute */
+.vertical-base {
+    vertical-align: baseline;
+}
+
+/* vertical align baseline */
+.vertical-top {
+    vertical-align: top;
+}
+
+/* vertical align top */
+nav.vertical ul li {
+    display: block;
+}
+
+/* vertical menu */
+nav.horizontal ul li {
+    display: inline-block;
+}
+
+/* horizontal menu */
+img {
+    max-width: 100%;
+}
+
+/*--end reset--*/
+body {
+    font-family: 'Oswald', sans-serif;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/*-- main --*/
+.main {
+    padding: 2em 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 5.5em;
+    color: #FFFFFF;
+    font-family: 'Caveat', cursive;
+    font-weight: 800;
+    text-shadow: 3px 3px 0 #000;
+}
+
+.music-player {
+    width: 45%;
+    margin: 3em auto 0;
+}
+
+.player-top {
+    background-color: #566e88;
+    padding: 1.5em 2em;
+}
+
+.player-bottom {
+    padding: 2em 3em 3em;
+    background-color: #fff;
+    position: relative;
+}
+
+.music-left {
+    float: left;
+    margin-top: 1em;
+}
+
+.music-right {
+    float: right;
+    width: 52%;
+}
+
+.music-right h2 {
+    color: #d01822;
+    font-size: 2.5em;
+}
+
+.music-right p {
+    font-size: 1.5em;
+    color: #2196f3;
+    margin-top: 2.5em;
+}
+
+.music-right h5 {
+    font-size: 0.9em;
+    color: #566e88;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 38%;
+    right: 8%;
+    z-index: 99;
+}
+
+/* ratings */
+.rating {
+    line-height: 18px;
+    display: inline-block;
+}
+
+.starRating:not(old) {
+    display: inline-block;
+    height: 18px;
+    width: 100px;
+    overflow: hidden;
+}
+
+.starRating:not(old) > input {
+    margin-right: -100%;
+    opacity: 0;
+}
+
+.starRating:not(old) > label {
+    float: right;
+    background: url(../images/star.png);
+    background-size: contain;
+    margin-right: 2px;
+}
+
+.starRating:not(old) > label:before {
+    content: '';
+    display: block;
+    width: 18px;
+    height: 18px;
+    background: url(../images/star1.png);
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.2s linear;
+}
+
+.starRating:not(old) > label:hover:before,
+.starRating:not(old) > label:hover ~ label:before,
+.starRating:not(:hover) > :checked ~ label:before {
+    opacity: 1;
+}
+
+/*--audio--*/
+.audio-top {
+    background: #231d2a;
+    padding: 0.5em 1.5em;
+    text-align: center;
+}
+
+.audio-grid h5 {
+    color: #6b6770;
+    font-size: 1.5em;
+}
+
+.audio-grid p {
+    color: #dc483a;
+    font-size: 1em;
+}
+
+.next-top {
+    position: relative;
+    z-index: 0;
+}
+
+.next-top li {
+    display: inline-block;
+}
+
+.next-top li a {
+    display: block;
+}
+
+.next-top li i {
+    background: url(../images/audio.png) no-repeat -5px -3px;
+    width: 36px;
+    height: 26px;
+    position: absolute;
+    top: -51%;
+    left: 16%;
+}
+
+.next-top li i.next {
+    background-position: -6px -35px;
+    left: 67%;
+}
+
+/*----*/
+.copyright {
+    margin: 2em 0 1em;
+    text-align: center;
+}
+
+.copyright p {
+    font-size: 1em;
+    color: #fff;
+}
+
+.copyright p a {
+    color: #fff;
+}
+
+.copyright p a:hover {
+    color: #EFCA4C;
+}
+
+/*---- responsive-design -----*/
+@media (max-width: 1440px) {
+    .music-player {
+        width: 49%;
+    }
+}
+
+@media (max-width: 1366px) {
+    .music-right {
+        width: 50%;
+    }
+}
+
+@media (max-width: 1280px) {
+    .music-player {
+        width: 54%;
+    }
+}
+
+@media (max-width: 1080px) {
+    .music-player {
+        width: 65%;
+        margin: 2em auto 0;
+    }
+
+    .next-top li i.next {
+        background-position: -5px -34px;
+        height: 29px;
+    }
+}
+
+@media (max-width: 991px) {
+    .main {
+        padding: 1em 0;
+    }
+
+    .music-player {
+        width: 70%;
+    }
+}
+
+@media (max-width: 900px) {
+    .music-player {
+        width: 78%;
+    }
+
+    h1 {
+        font-size: 5.2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .music-player {
+        width: 86%;
+    }
+
+    .music-player {
+        width: 86%;
+    }
+
+    .player-top {
+        padding: 1.2em 1.5em;
+    }
+}
+
+@media (max-width: 640px) {
+    .music-left {
+        width: 45%;
+    }
+
+    h1 {
+        font-size: 4.5em;
+    }
+
+    .music-right h2 {
+        font-size: 2.2em;
+        line-height: 1.2em;
+    }
+
+    .music-left {
+        margin-top: 0.5em;
+    }
+
+    .music-right p {
+        font-size: 1.1em;
+        margin-top: 3em;
+        letter-spacing: 1px;
+    }
+
+    .mejs-controls .mejs-time-rail .mejs-time-total {
+        width: 225px !important;
+    }
+
+    .next-top li i {
+        background-position: -5px -3px;
+        width: 29px;
+        height: 26px;
+        background-size: 584%;
+    }
+
+    .next-top li i.next {
+        background-position: -6px -29px;
+        left: 72%;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 3em 0;
+    }
+
+    h1 {
+        font-size: 4em;
+    }
+
+    .music-left {
+        width: 43%;
+    }
+
+    .music-right h2 {
+        font-size: 1.8em;
+    }
+
+    .music-right p {
+        font-size: 0.9em;
+        letter-spacing: 0px;
+    }
+
+    .music-right h5 {
+        font-size: 0.75em;
+        bottom: 35%;
+        right: 7%;
+    }
+
+    .next-top li i {
+        background-position: -5px -3px;
+        width: 25px;
+        height: 18px;
+        background-size: 579%;
+        top: -93%;
+        left: 11%;
+    }
+
+    .next-top li i.next {
+        background-position: -4px -27px;
+        left: 65%;
+        width: 29px;
+        height: 19px;
+        background-size: 521%;
+    }
+
+    .copyright p {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 320px) {
+    .main {
+        padding: 1em 0;
+    }
+
+    h1 {
+        font-size: 3em;
+    }
+
+    .music-player {
+        width: 95%;
+        margin: 1em auto 0;
+    }
+
+    .player-top {
+        padding: 1em 0.8em;
+    }
+
+    .starRating:not(old) > label:before {
+        width: 15px;
+        height: 15px;
+        background: url(../images/star1.png);
+    }
+
+    .starRating:not(old) > label {
+        margin-right: 1px;
+    }
+
+    .starRating:not(old) {
+        height: 16px;
+        width: 82px;
+    }
+
+    .music-left {
+        width: 100%;
+        margin: 0;
+        float: none;
+        text-align: center;
+    }
+
+    .music-left img {
+        max-width: 38%;
+    }
+
+    .music-right {
+        width: 100%;
+        float: none;
+    }
+
+    .music-right h2 {
+        font-size: 1.6em;
+    }
+
+    .music-right p {
+        font-size: 0.8em;
+        margin-top: 0.8em;
+    }
+
+    .music-right h5 {
+        font-size: 0.7em;
+        bottom: 23%;
+    }
+
+    .next-top li i {
+        top: -135%;
+        left: 23%;
+    }
+
+    .next-top li i.next {
+        left: 67%;
+    }
+
+    .copyright p {
+        font-size: 0.8em;
+    }
+}
+
+/*--//responsive-design---*/

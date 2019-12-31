@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SystemMapper">
+
+    <!--数据库名 -->
+    <sql id="databaseName">
+        iotdata
+    </sql>
+    <sql id="baseattribs">
+        baseattribs
+    </sql>
+
+
+    <!-- 查询基础设置 -->
+    <select id="listBaseAttributes" parameterType="String" resultType="pd">
+        select valueid,valuename,issingleselection from
+        <include refid="baseattribs"></include>
+    </select>
+    <select id="getBaseAttri" parameterType="String" resultType="String">
+        select valuename from
+        <include refid="baseattribs"></include>
+        where valueid = #{valueid}
+    </select>
+    <update id="saveAttri" parameterType="pd">
+        update
+        <include refid="baseattribs"></include>
+        set valuename=#{valuename}
+        where valueid = #{valueid}
+    </update>
+</mapper>

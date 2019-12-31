@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ScheTaskMapper">
+    <!-- 字段 -->
+    <sql id="Field">
+        TaskId,
+        ScheId,
+        TaskName,
+        Status,
+        StartDateTime,
+        EndDateTime,
+        LastingSeconds,
+        FilesInfo,
+        Weeks,
+        Vols,
+        DomainsId,
+        ExecTime,
+        tasktype,
+        upDateTime,
+        note,
+        SingleDate,
+        nextFireTime,
+        jobStatus
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{TaskId},
+        #{ScheId},
+        #{TaskName},
+        #{Status},
+        #{StartDateTime},
+        #{EndDateTime},
+        #{LastingSeconds},
+        #{FilesInfo},
+        #{Weeks},
+        #{Vols},
+        #{DomainsId},
+        #{ExecTime},
+        #{tasktype},
+        #{upDateTime},
+        #{note},
+        #{SingleDate},
+        #{nextFireTime},
+        #{jobStatus}
+    </sql>
+
+    <!--表名 -->
+    <sql id="tableName">
+        schetask
+    </sql>
+    <!--表名 -->
+    <sql id="scheduleName">
+        schedules
+    </sql>
+    <!-- 根据方案编号(可无)列出所有任务(分页)-->
+    <select id="getScheTaskByScheIdPage" parameterType="Page" resultType="ScheTask">
+        select
+        TaskId,
+        t.ScheId,
+        a.ScheName,
+        TaskName,
+        Status,
+        LastingSeconds,
+        FilesInfo,
+        Weeks,
+        DomainsId,
+        ExecTime,
+        nextFireTime,
+        jobStatus,
+        tasktype,
+        Vols
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="scheduleName"></include> a on t.ScheId=a.ScheId
+        where
+        <if test="pd.ScheId != null and pd.ScheId != ''">
+            t.ScheId = #{pd.ScheId} and
+        </if>
+        <if test="pd.namekey != null and pd.namekey != ''">
+            (TaskId like CONCAT("%",CONCAT(#{pd.namekey},"%")) or
+            TaskName like CONCAT("%",CONCAT(#{pd.namekey},"%"))) and
+        </if>
+        t.isuse = 1 and a.isuse = 1
+        <!-- order by nextFireTime DESC,TaskId DESC -->
+        order by
+        CASE
+        WHEN
+        jobStatus <![CDATA[= "RUNNING"]]> THEN 1
+        WHEN
+        jobStatus <![CDATA[= "PAUSED"]]> THEN 200
+        ELSE
+        <![CDATA[100]]>
+        END ,nextFireTime <![CDATA[<now(),if(]]>nextFireTime<![CDATA[<now(), 0,]]>nextFireTime<![CDATA[)]]>
+        <if test="pd.sys == null or pd.sys == ''">
+            ,nextFireTime asc
+        </if>
+    </select>
+    <!-- 根据方案编号查询任务-->
+    <select id="getScheTasksByScheId" parameterType="pd" resultType="ScheTask">
+        select
+        TaskId,
+        t.ScheId,
+        a.ScheName,
+        TaskName,
+        Vols,
+        Status,
+        Weeks,
+        ExecTime,
+        StartDateTime,
+        EndDateTime,
+        SingleDate,
+        LastingSeconds,
+        FilesInfo,
+        DomainsId,
+        ExecTime,
+        tasktype,
+        t.note
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="scheduleName"></include> a on t.ScheId=a.ScheId
+        where
+        t.ScheId = #{ScheId} and
+        t.isuse = 1 and a.isuse = 1
+        <if test="newScheId != null and newScheId != ''"><!-- 查询时如果pd带有newScheId的值，则查询的是本方案下启动的任务 -->
+            and Status = 1
+        </if>
+    </select>
+    <!--取最大ID-->
+    <select id="findMaxTaskId" parameterType="pd" resultType="String">
+        select MAX(TaskId) Tid from
+        <include refid="tableName"></include>
+    </select>
+
+    <!--新增-->
+    <insert id="insertTask" parameterType="pd">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="editScheTask" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        ScheId = #{ScheId},
+        TaskName = #{TaskName},
+        Status = #{Status},
+        StartDateTime = #{StartDateTime},
+        EndDateTime = #{EndDateTime},
+        LastingSeconds = #{LastingSeconds},
+        FilesInfo = #{FilesInfo},
+        Weeks = #{Weeks},
+        Vols = #{Vols},
+        DomainsId = #{DomainsId},
+        ExecTime = #{ExecTime},
+        tasktype = #{tasktype},
+        upDateTime = #{upDateTime}
+        <if test="note != null and note != ''">
+            ,SingleDate = #{SingleDate}
+        </if>
+        <if test="note != null and note != ''">
+            ,note = #{note}
+        </if>
+        where
+        TaskId = #{TaskId}
+    </update>
+    <!-- 批量修改任务 -->
+    <update id="editTaskList" parameterType="pd">
+        update
+        <include refid="tableName"></include>
+        set
+        ScheId = #{ScheId},
+        Status = #{Status},
+        StartDateTime = #{StartDateTime},
+        EndDateTime = #{EndDateTime},
+        LastingSeconds = #{LastingSeconds},
+        FilesInfo = #{FilesInfo},
+        Weeks = #{Weeks},
+        Vols = #{Vols},
+        DomainsId = #{DomainsId},
+        tasktype = #{tasktype},
+        upDateTime = #{upDateTime}
+        <if test="SingleDate != null and SingleDate != ''">
+            ,SingleDate = #{SingleDate}
+        </if>
+        <if test="note != null and note != ''">
+            ,note = #{note}
+        </if>
+        where
+        TaskId in
+        <foreach collection="taskids" index="index" item="item" open="(" separator="," close=")">
+            '${item}'
+        </foreach>
+    </update>
+    <!-- 修改音量 -->
+    <update id="editScheTaskVol" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        Vols = #{Vols}
+        where
+        TaskId = #{TaskId}
+    </update>
+    <!-- 隐藏式删除 -->
+    <update id="deleteScheTask" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        isuse = 0
+        where
+        TaskId = #{TaskId}
+    </update>
+    <!-- 更改任务启用性 -->
+    <update id="editScheTaskStatus" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        <if test="isuse != null and isuse != '' and isuse == 1">
+            Status = 1
+        </if>
+        <if test="isuse != null and isuse != '' and isuse == 0">
+            Status = 0
+        </if>
+        where
+        TaskId = #{TaskId}
+    </update>
+    <!-- 批量删除任务 -->
+    <update id="deleteAllOS" parameterType="String">
+        update
+        <include refid="tableName"></include>
+        set
+        isuse = 0
+        where
+        TaskId in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <!--通过ID获取任务信息 -->
+    <select id="getTaskByTaskId" parameterType="pd" resultType="ScheTask">
+        select
+        TaskId,
+        t.ScheId,
+        a.ScheName,
+        TaskName,
+        Status,
+        LastingSeconds,
+        FilesInfo,
+        Weeks,
+        DomainsId,
+        ExecTime,
+        nextFireTime,
+        jobStatus,
+        tasktype,
+        StartDateTime,
+        EndDateTime,
+        Vols,
+        t.note,
+        SingleDate,
+        a.Priority as castlevel
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="scheduleName"></include> a on t.ScheId=a.ScheId
+        where TaskId = #{TaskId} and
+        t.isuse = 1 and a.isuse = 1
+    </select>
+    <!--通过ID获取任务信息<导出Excel> -->
+    <select id="getTaskListByIds" parameterType="pd" resultType="ScheTask">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        <where>
+            <choose>
+                <when test="taskids!=null and taskids!='' and taskids.size>0">
+                    and TaskId in
+                    <foreach collection="taskids" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                </when>
+                <otherwise>and TaskId is null</otherwise>
+            </choose>
+        </where>
+    </select>
+    <!-- 更改任务定时状态 -->
+    <update id="updateScheTask" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        <if test="nextFireTime != null and nextFireTime != ''">
+            nextFireTime = #{nextFireTime},
+        </if>
+        jobStatus = #{jobStatus}
+        where
+        TaskId = #{TaskId}
+    </update>
+</mapper>

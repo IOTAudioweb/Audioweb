@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="cacheEnabled" value="true"/><!-- 全局映射器启用缓存 -->
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="defaultExecutorType" value="REUSE"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.audioweb.entity.Domains" alias="Domains"/>
+        <typeAlias type="com.audioweb.entity.Terminals" alias="Terminals"/>
+        <typeAlias type="com.audioweb.entity.Log" alias="Log"/>
+        <typeAlias type="com.audioweb.entity.Menu" alias="Menu"/>
+        <typeAlias type="com.audioweb.entity.Users" alias="Users"/>
+        <typeAlias type="com.audioweb.entity.ScheTask" alias="ScheTask"/>
+        <typeAlias type="com.audioweb.entity.Schedules" alias="Schedules"/>
+        <typeAlias type="com.audioweb.entity.Roles" alias="Roles"/>
+        <typeAlias type="com.audioweb.entity.JobEntity" alias="JobEntity"/>
+        <typeAlias type="com.audioweb.entity.ScheduleJob" alias="ScheduleJob"/>
+        <typeAlias type="com.audioweb.entity.TermTask" alias="TermTask"/>
+        <typeAlias type="com.audioweb.entity.PlayList" alias="PlayList"/>
+        <typeAlias type="com.audioweb.util.PageData" alias="pd"/>
+        <!-- 分页 -->
+        <typeAlias type="com.audioweb.entity.Page" alias="Page"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.audioweb.plugin.PagePlugin">
+            <property name="dialect" value="mysql"/>
+            <property name="pageSqlId" value=".*Page.*"/>
+        </plugin>
+    </plugins>
+
+    <!-- mappers告诉了MyBatis去哪里找持久化类的映射文件 -->
+    <!--
+      <mappers>
+          <mapper resource="com/audioweb/mapper/ScheTaskMapper.xml"/>
+      </mappers>
+    -->
+</configuration>

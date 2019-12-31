@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TerminalsMapper">
+
+    <!-- 字段 -->
+    <sql id="Field">
+        TIDString,
+        TName,
+        DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        isuse,
+        Precinct
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{TIDString},
+        #{TName},
+        #{DomainId},
+        #{TIP},
+        #{ISCMIC},
+        #{ISAutoCast},
+        1,
+        #{Precinct}
+
+    </sql>
+
+    <!--表名 -->
+    <sql id="tableName">
+        terminals
+    </sql>
+    <sql id="domainstableName">
+        domains
+    </sql>
+    <!--根据分区编号查询分区下所有终端 <分页>-->
+    <select id="listAllTerByDomainIdPage" parameterType="page" resultType="Terminals">
+        select
+        TIDString,
+        TName,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        a.DomainName as DomainName,
+        FinalOfflineDate,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where
+        t.isuse = 1 and a.isuse = 1
+        <if test="pd.DomainId != null and pd.DomainId != '' and pd.DomainId != 0">
+            and t.DomainId like CONCAT(#{pd.DomainId},"%")
+        </if>
+        <if test="pd.imeikey != null and pd.imeikey != ''">
+            and (TIDString like CONCAT("%",CONCAT(#{pd.imeikey},"%")) or
+            TName like CONCAT("%",CONCAT(#{pd.imeikey},"%")))
+        </if>
+        ORDER BY TIDString asc
+    </select>
+    <!--根据分区编号查询分区下所有终端 -->
+    <select id="listAllTerByDomainId" parameterType="page" resultType="pd">
+        select
+        TIDString,
+        TName,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        a.DomainName as DomainName,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where t.DomainId like CONCAT(#{pd.DomainId},"%")
+        and t.isuse = 1 and a.isuse = 1
+    </select>
+
+    <!--根据ip查询对应终端 -->
+    <select id="findTermbyTip" parameterType="String" resultType="Terminals">
+        select
+        TIDString,
+        TName,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        a.DomainName as DomainName,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where t.TIP = #{tip}
+        and t.isuse = 1 and a.isuse = 1
+    </select>
+
+    <!--根据多个ID号查询对应终端(分页) -->
+    <!-- <select id="listTerByTIDStringPage" parameterType="page" resultType="Terminals">
+        select
+            TIDString,
+            TName,
+            t.DomainId as DomainId,
+            TIP,
+            ISCMIC,
+            ISAutoCast,
+            a.DomainName as DomainName,
+            Precinct
+        from
+            <include refid="tableName"></include> t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where in #{pd.str} and  t.isuse = 1 and a.isuse = 1
+        ORDER BY TIDString desc
+    </select> -->
+
+    <!--根据分区编号查询本分区终端 -->
+    <select id="listTerByDomainId" parameterType="pd" resultType="Terminals">
+        select
+        TIDString,
+        t.DomainId as DomainId,
+        TIP
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where t.DomainId = #{DomainId}
+        and t.isuse = 1 and a.isuse = 1
+    </select>
+
+    <!--查询所有终端 -->
+    <select id="listAllTer" parameterType="String" resultType="pd">
+        select
+        TIDString,
+        TName,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        a.DomainName,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where
+        t.isuse = 1 and a.isuse = 1
+    </select>
+    <!--查询所有终端 -->
+    <select id="listAllTerm" parameterType="page" resultType="Terminals">
+        select
+        TIDString,
+        TName,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        a.DomainName,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where
+        t.isuse = 1 and a.isuse = 1
+    </select>
+    <!--查询所有终端 (分页)-->
+    <select id="listAllTerPage" parameterType="page" resultType="Terminals">
+        select
+        TIDString,
+        TName,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        DomainName,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where
+        t.isuse = 1 and a.isuse = 1
+    </select>
+    <!--通过ID获取终端信息 -->
+    <select id="getTermByTIDString" parameterType="String" resultType="Terminals">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where TIDString = #{TIDString}
+
+    </select>
+    <!--通过ID获取终端特定信息 -->
+    <select id="getTermByTid" parameterType="String" resultType="Terminals">
+        select
+        TIDString,
+        t.DomainId as DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        Precinct,
+        TName,
+        DomainName
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where TIDString = #{TIDString} and t.isuse = 1 and a.isuse = 1
+    </select>
+    <!--取最大ID-->
+    <select id="findMaxTIDString" parameterType="pd" resultType="String">
+        select MAX(TIDString) Tid from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where t.isuse = 1 and a.isuse = 1
+    </select>
+    <!--获取正确ID-->
+    <select id="findUsingId" parameterType="pd" resultType="pd">
+        select
+        TIDString,
+        t.isuse as isuse1,
+        a.isuse as isuse2
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        where TIDString = #{TIDString}
+    </select>
+    <!--新增-->
+    <insert id="insertTer" parameterType="Terminals">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+    <!--删除后同ID新增-->
+    <update id="insertTerByTid" parameterType="pd">
+        update
+        <include refid="tableName"></include>
+        set TName=#{TName},
+        DomainId=#{DomainId},
+        TIP=#{TIP},
+        ISCMIC=#{ISCMIC},
+        ISAutoCast=#{ISAutoCast},
+        isuse = 1
+        <if test="Precinct != null and Precinct != ''">
+            ,Precinct=#{Precinct}
+        </if>
+        where
+        TIDString=#{TIDString}
+    </update>
+    <!--删除-->
+    <update id="deleteTerByTid" parameterType="String">
+        update
+        <include refid="tableName"></include>
+        set isuse = 0
+        where TIDString=#{TIDString}
+    </update>
+    <!-- 批量删除终端 -->
+    <update id="deleteAllOS" parameterType="String">
+        update
+        <include refid="tableName"></include>
+        set isuse = 0
+        where
+        TIDString in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!--编辑 -->
+    <update id="updateTer" parameterType="pd">
+        update
+        <include refid="tableName"></include>
+        set TName=#{TName},
+        DomainId=#{DomainId},
+        TIP=#{TIP},
+        ISCMIC=#{ISCMIC},
+        ISAutoCast=#{ISAutoCast}
+        <if test="Precinct != null and Precinct != ''">
+            ,Precinct=#{Precinct}
+        </if>
+        where
+        TIDString=#{TIDString}
+    </update>
+    <!--通过分区ID获取终端信息<定时任务> -->
+    <select id="listAllTerByDomainsId" parameterType="pd" resultType="pd">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        <where>
+            isuse = 1
+            <choose>
+                <when test="domidlist !=null and domidlist !='' and domidlist.length>0">
+                    and DomainId in
+                    <foreach collection="domidlist" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                </when>
+                <when test="domidlists !=null and domidlists !='' and domidlists.size()>0">
+                    and DomainId in
+                    <foreach collection="domidlists" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                </when>
+                <otherwise>and DomainId is null</otherwise>
+            </choose>
+        </where>
+    </select>
+    <!--通过终端ID获取终端信息<分页> -->
+    <select id="listAllTerByTidPage" parameterType="page" resultType="Terminals">
+        select
+        TIDString,
+        TName,
+        t.DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        DomainName,
+        FinalOfflineDate,
+        Precinct
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        <where>
+            a.isuse = 1 and t.isuse = 1
+            <choose>
+                <when test="pd.termlist !=null and pd.termlist !='' and pd.termlist.size()>0">
+                    and TIDString in
+                    <foreach collection="pd.termlist" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                </when>
+                <otherwise>
+                    <if test="pd.MSG != 'all'">
+                        and TIDString is null
+                    </if>
+                </otherwise>
+            </choose>
+        </where>
+        order by FinalOfflineDate DESC,t.DomainId ASC
+    </select>
+    <!--更新终端下线时间 -->
+    <update id="updateTerDate" parameterType="pd">
+        update
+        <include refid="tableName"></include>
+        set
+        <if test="FinalOfflineDate != null">
+            FinalOfflineDate=#{FinalOfflineDate}
+        </if>
+        where
+        TIDString=#{TIDString} and isuse = 1
+    </update>
+    <!--通过分区ID或者TIDString获取终端信息<寻呼话筒> -->
+    <select id="listAllTerByIds" parameterType="pd" resultType="Terminals">
+        select
+        TIDString,
+        TName,
+        t.DomainId,
+        TIP,
+        ISCMIC,
+        ISAutoCast,
+        DomainName
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="domainstableName"></include> a on t.DomainId=a.DomainId
+        <where>
+            a.isuse = 1 and t.isuse = 1
+            <choose>
+                <when test="ids !=null and ids !='' and ids.size>0">
+                    and ( DomainName in
+                    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                    or t.DomainId in
+                    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                    or TIDString in
+                    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                    )
+                </when>
+                <otherwise>and TIDString is null</otherwise>
+            </choose>
+        </where>
+    </select>
+    <!-- 批量修改终端分区 -->
+    <update id="editTersDomainId" parameterType="pd">
+        update
+        <include refid="tableName"></include>
+        set
+        DomainId=#{DomainId}
+        where
+        TIDString in
+        <foreach item="item" index="index" collection="tids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

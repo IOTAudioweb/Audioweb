@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SchedulesMapper">
+    <!-- 字段 -->
+    <sql id="Field">
+        ScheId,
+        ScheName,
+        Priority,
+        IsExecSchd,
+        Description
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{ScheId},
+        #{ScheName},
+        #{Priority},
+        #{IsExecSchd},
+        #{Description}
+    </sql>
+
+    <!--表名 -->
+    <sql id="tableName">
+        schedules
+    </sql>
+    <!--表名 -->
+    <sql id="tasktable">
+        schetask
+    </sql>
+
+    <!--查询所有方案 <分页> -->
+    <select id="listAllSchedulesPage" parameterType="page"
+            resultType="Schedules">
+        SELECT
+        q.ScheId as ScheId,
+        ScheName,
+        Priority,
+        IsExecSchd,
+        Description,
+        w.TaskNum as TaskNum
+        FROM
+        (select
+        ScheId,
+        ScheName,
+        Priority,
+        IsExecSchd,
+        Description
+        from
+        <include refid="tableName"></include>
+        where isuse = 1) as q
+        LEFT JOIN
+        (select
+        a.ScheId,
+        count(1) as TaskNum
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN
+        <include refid="tasktable"></include>
+        a on t.ScheId=a.ScheId
+        WHERE a.isuse = 1 and t.isuse = 1
+        group by a.ScheId) as w
+        on q.ScheId = w.ScheId
+        where 1=1
+        <if test="pd.namekey !=null and pd.namekey!=''">
+            and ScheName LIKE CONCAT(CONCAT('%', #{pd.namekey}),'%')
+        </if>
+    </select>
+
+
+    <!--查询所有方案 -->
+    <select id="listSchedules" parameterType="String" resultType="Schedules">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where
+        isuse = 1
+    </select>
+    <!--取最大ID -->
+    <select id="findMaxScheId" parameterType="pd" resultType="String">
+        select MAX(ScheId) TIDSTRING from
+        <include refid="tableName"></include>
+    </select>
+
+    <!-- 新增 -->
+    <insert id="addSchedule" parameterType="pd">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="editSchedule" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        ScheName = #{ScheName},
+        Priority = #{Priority}
+        <if test="Description != null and Description != ''">
+            ,Description = #{Description}
+        </if>
+        where
+        ScheId = #{ScheId}
+    </update>
+
+    <!-- 隐藏式删除 -->
+    <update id="deleteSchedule" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        isuse = 0
+        where
+        ScheId = #{ScheId}
+    </update>
+    <!-- 查询启用方案Id -->
+    <select id="listUsingSchedule" parameterType="pd" resultType="Schedules">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where
+        IsExecSchd = 1 and isuse = 1
+    </select>
+    <!-- 更改启用方案 -->
+    <update id="editUsingSchedule" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        IsExecSchd = #{isuse}
+        where
+        ScheId = #{ScheId}
+    </update>
+    <!--根据ID查询指定方案 -->
+    <select id="findScheduleById" parameterType="pd" resultType="Schedules">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where
+        isuse = 1 and ScheId = #{ScheId}
+    </select>
+</mapper>

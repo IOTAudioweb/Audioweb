@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dbaudioweb?characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: lxy123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mvc:
+    static-path-pattern=/static/**:
+mybatis:
+    mapper-locations: classpath:mybatis/mapper/*.xml
+    type-aliases-package: com.audioweb.entity
+server:
+  port:
+
+logging.level.org.springframework.boot.autoconfigure: ERROR
+
+

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RolesMapper">
+
+
+    <!-- 字段 -->
+    <sql id="Field">
+        RoleId,
+        RoleName,
+        RoleLevel,
+        MenuRights,
+        isuse,
+        Description
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{RoleId},
+        #{RoleName},
+        #{RoleLevel},
+        #{MenuRights},
+        #{isuse},
+        #{Description}
+    </sql>
+
+    <!--表名 -->
+    <sql id="tableName">
+        roles
+    </sql>
+
+    <!-- 列出所有角色 分页-->
+    <select id="listAllRoleslistPage" parameterType="Page" resultType="Roles">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        <where>
+            <if test="pd.namekey !=null and pd.namekey!=''">
+                and RoleName LIKE CONCAT(CONCAT('%', #{pd.namekey}),'%')
+            </if>
+            <if test="pd.RoleLevel !=null and pd.RoleLevel!=''">
+                and RoleLevel >= #{pd.RoleLevel}
+            </if>
+            and
+            isuse = 1
+        </where>
+        ORDER BY RoleId desc
+    </select>
+    <!-- 列出所有角色 -->
+    <select id="listAllRoles" parameterType="pd" resultType="Roles">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where
+        isuse = 1
+        <if test="RoleLevel != null and RoleLevel != ''">
+            and RoleLevel > #{RoleLevel}
+        </if>
+        ORDER BY RoleId
+    </select>
+    <!-- 查询本角色属下最大ID -->
+    <select id="findmaxIdbyRoleId" parameterType="Page" resultType="pd">
+        select
+        MAX(RoleId) RoleId
+        from
+        <include refid="tableName"></include>
+        where
+        RoleId LIKE CONCAT(#{RoleId},'%')
+    </select>
+    <!-- 查询角色信息-->
+    <select id="findrolebyRoleId" parameterType="pd" resultType="Roles">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where
+        RoleId = #{RoleId}
+    </select>
+    <!-- 新增 -->
+    <insert id="addRole" parameterType="pd">
+        insert into <include refid="tableName"></include> (
+        RoleId,
+        RoleName,
+        RoleLevel,
+        Description,
+        isuse
+        ) values (
+        #{RoleId},
+        #{RoleName},
+        #{RoleLevel},
+        #{Description},
+        1
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="editRole" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set RoleName = #{RoleName},
+        RoleLevel = #{RoleLevel}
+        <if test="Description != null and Description != ''">
+            ,Description = #{Description}
+        </if>
+        where
+        RoleId = #{RoleId}
+    </update>
+    <!-- 隐藏式删除 -->
+    <update id="deleteRole" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        isuse = 0
+        where
+        RoleId = #{RoleId}
+    </update>
+    <!-- 授权 -->
+    <update id="editRoleRights" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set MenuRights = #{MenuRights}
+        where
+        RoleId = #{RoleId}
+    </update>
+    <!-- 删除  -->
+    <update id="deleteRoleRights" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set isuse = #{isuse}
+        where
+        RoleId = #{RoleId}
+    </update>
+
+</mapper>

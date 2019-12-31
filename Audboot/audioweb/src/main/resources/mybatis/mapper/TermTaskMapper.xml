@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TermTaskMapper">
+    <!-- 字段 -->
+    <sql id="Field">
+        TaskId,
+        TaskName,
+        Status,
+        Weeks,
+        Vols,
+        DomainsId,
+        ExecTime,
+        upDateTime,
+        note,
+        nextFireTime,
+        jobStatus,
+        TIDString,
+        CastLevel,
+        LastingSeconds,
+        type
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{TaskId},
+        #{TaskName},
+        #{Status},
+        #{Weeks},
+        #{Vols},
+        #{DomainsId},
+        #{ExecTime},
+        #{upDateTime},
+        #{note},
+        #{nextFireTime},
+        #{jobStatus},
+        #{TIDString},
+        #{CastLevel},
+        #{LastingSeconds},
+        #{type}
+    </sql>
+
+    <!--表名 -->
+    <sql id="tableName">
+        termtask
+    </sql>
+    <!--表名 -->
+    <sql id="terminalName">
+        terminals
+    </sql>
+    <!-- 根据方案编号(可无)列出所有任务(分页)-->
+    <select id="getTermTaskPage" parameterType="Page" resultType="TermTask">
+        select
+        TaskId,
+        TaskName,
+        t.TIDString,
+        a.TName,
+        Status,
+        Weeks,
+        DomainsId,
+        ExecTime,
+        nextFireTime,
+        jobStatus,
+        CastLevel,
+        LastingSeconds,
+        type
+        from
+        <include refid="tableName"></include>
+        t LEFT JOIN <include refid="terminalName"></include> a on t.TIDString=a.TIDString
+        where
+        t.isuse = 1
+        <if test="pd.namekey != null and pd.namekey != ''">
+            and (TaskId like CONCAT("%",CONCAT(#{pd.namekey},"%")) or
+            TaskName like CONCAT("%",CONCAT(#{pd.namekey},"%")))
+        </if>
+        ORDER BY TaskId desc
+    </select>
+    <!--取最大ID-->
+    <select id="findMaxTaskId" parameterType="pd" resultType="String">
+        select MAX(TaskId) Tid from
+        <include refid="tableName"></include>
+    </select>
+
+    <!--新增-->
+    <insert id="insertTask" parameterType="pd">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="editTermTask" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        TaskName = #{TaskName},
+        Status = #{Status},
+        Weeks = #{Weeks},
+        Vols = #{Vols},
+        type = #{type},
+        DomainsId = #{DomainsId},
+        TIDString = #{TIDString},
+        upDateTime = #{upDateTime},
+        LastingSeconds = #{LastingSeconds}
+        <if test="note != null and note != ''">
+            ,note = #{note}
+        </if>
+        <if test="ExecTime != null and ExecTime != ''">
+            ,ExecTime = #{ExecTime}
+        </if>
+        where
+        TaskId = #{TaskId}
+    </update>
+    <!-- 隐藏式删除 -->
+    <update id="deleteTermTask" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        isuse = 0
+        where
+        TaskId = #{TaskId}
+    </update>
+
+    <!-- 批量删除任务 -->
+    <update id="deleteAllOS" parameterType="String">
+        update
+        <include refid="tableName"></include>
+        set
+        isuse = 0
+        where
+        TaskId in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <!--通过ID获取任务信息 -->
+    <select id="getTaskByTaskId" parameterType="pd" resultType="TermTask">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where TaskId = #{TaskId} and isuse = 1
+    </select>
+    <!-- 更改任务定时状态 -->
+    <update id="updateTermTask" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        <if test="nextFireTime != null and nextFireTime != ''">
+            nextFireTime = #{nextFireTime},
+        </if>
+        jobStatus = #{jobStatus}
+        where
+        TaskId = #{TaskId}
+    </update>
+    <!-- 更改任务启用性 -->
+    <update id="editTermTaskStatus" parameterType="pd">
+        update
+        <include refid="tableName"/>
+        set
+        <if test="isuse != null and isuse != '' and isuse == 1">
+            Status = 1
+        </if>
+        <if test="isuse != null and isuse != '' and isuse == 0">
+            Status = 0
+        </if>
+        where
+        TaskId = #{TaskId}
+    </update>
+</mapper>

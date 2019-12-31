@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UsersMapper">
+    <!--表名 -->
+    <sql id="usersTable">
+        users
+    </sql>
+    <sql id="roleTable">
+        roles
+    </sql>
+    <sql id="Field">
+        userid,
+        RoleId,
+        loginid,
+        password,
+        username,
+        isuse,
+        note,
+        Email,
+        LastLoginDate,
+        DomainId
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{userid},
+        #{RoleId},
+        #{loginid},
+        #{password},
+        #{username},
+        #{isuse},
+        #{note},
+        #{Email},
+        #{LastLoginDate},
+        #{DomainId}
+    </sql>
+
+    <!-- 判断用户名和密码 -->
+    <select id="getUserByLoginAndPwd" parameterType="pd" resultType="Users">
+        SELECT userid,
+        username,
+        ui.RoleId as RoleId,
+        loginid,
+        password,
+        MenuRights,
+        RoleName,
+        RoleLevel,
+        LastLoginDate,
+        ui.isuse as isuse,
+        realcasttype
+        from (
+        <include refid="usersTable"/>
+        ui
+        LEFT JOIN
+        <include refid="roleTable"/>
+        r on ui.RoleId = r.RoleId)
+        <where>
+            <if test="loginid!=null and password!=null">
+                and loginid = #{loginid} and password=#{password} and ui.isuse=1 and r.isuse = 1 and ui.type = 1
+            </if>
+        </where>
+    </select>
+    <!--查询用户列表(分页) -->
+    <select id="getUserslistPage" parameterType="Page" resultType="Users">
+        SELECT userid,
+        username,
+        ui.RoleId as RoleId,
+        loginid,
+        password,
+        ui.isuse as isuse,
+        LastLoginDate,
+        ui.note as note,
+        RoleName,
+        Email,
+        DomainId,
+        MenuRights
+        from (
+        <include refid="usersTable"/>
+        ui
+        LEFT JOIN
+        <include refid="roleTable"/>
+        r on ui.RoleId = r.RoleId)
+        <where>
+            <if test="pd.namekey != null and pd.namekey != ''">
+                and username LIKE CONCAT(CONCAT('%', #{pd.namekey}),'%')
+            </if>
+            <if test="pd.isusekey != null and pd.isusekey != ''">
+                and isuse =#{pd.isusekey}
+            </if>
+            <if test="pd.RoleLevel !=null and pd.RoleLevel!=''">
+                and r.RoleLevel > #{pd.RoleLevel}
+            </if>
+            and ui.type = 1 and r.isuse = 1
+        </where>
+    </select>
+    <!-- 新增用户信息 -->
+    <insert id="insertUser" parameterType="pd">
+        insert into <include refid="usersTable"></include> (
+        userid,
+        username,
+        RoleId,
+        loginid,
+        password,
+        CreatDate,
+        LastPasswordChangeDate,
+        isuse,
+        type,
+        realcasttype
+        ) values (
+        #{userid},
+        #{username},#{roleId},#{loginid},#{password},#{CreatDate},#{LastPasswordChangeDate},1,1,#{realcasttype}
+        )
+    </insert>
+    <!-- 修改用户密码 -->
+    <update id="editPwd" parameterType="pd">
+        update
+        <include refid="usersTable"></include>
+        set oldpassword=#{oldpassword},
+        password=#{password},
+        username=#{username}
+        where userid=#{userid}
+    </update>
+    <!-- 修改用户 -->
+    <update id="editUser" parameterType="pd">
+        update
+        <include refid="usersTable"/>
+        set type = 1
+        <if test="username != null and username != ''">
+            ,username = #{username}
+        </if>
+        <if test="roleId != null and roleId != ''">
+            ,RoleId = #{roleId}
+        </if>
+        <if test="password != null and password != ''">
+            ,password = #{password}
+        </if>
+        <if test="isuse != null and isuse != ''">
+            ,isuse = #{isuse}
+        </if>
+        <if test="note != null and note != ''">
+            ,note = #{note}
+        </if>
+        <if test="LastLoginDate != null and LastLoginDate != ''">
+            ,LastLoginDate = #{LastLoginDate}
+        </if>
+        <if test="realcasttype != null and realcasttype != ''">
+            ,realcasttype = #{realcasttype}
+        </if>
+        where
+        userid = #{userid}
+    </update>
+    <!-- 修改用户角色 -->
+    <update id="editRole" parameterType="pd">
+        update
+        <include refid="usersTable"/>
+        set RoleId = #{RoleId}
+        where
+        userid = #{userid}
+    </update>
+    <!-- 更新用户登录时间 -->
+    <update id="updateUser" parameterType="pd">
+        update
+        <include refid="usersTable"/>
+        set LastLoginDate = #{date}
+        where
+        userid = #{userid}
+    </update>
+    <!-- 删除用户账号 -->
+    <update id="deleteUser" parameterType="String" flushCache="false">
+        update
+        <include refid="usersTable"/>
+        set type = 0
+        where
+        userid = #{userid}
+    </update>
+
+    <!-- 修改用户账号可用状态 -->
+    <update id="editIsenabled" parameterType="pd">
+        update
+        <include refid="usersTable"/>
+        set isuse = #{isuse}
+        where
+        userid = #{userid}
+    </update>
+    <!-- 判断用户名是否存在 -->
+    <select id="getUseridByLoginid" parameterType="String" resultType="String">
+        select userid from (
+        <include refid="usersTable"/>
+        ui
+        LEFT JOIN
+        <include refid="roleTable"/>
+        r on ui.RoleId = r.RoleId)
+        where loginid=#{loginid} and ui.type = 1 and r.isuse = 1
+    </select>
+    <!--取最大ID-->
+    <select id="findMaxuserId" parameterType="pd" resultType="String">
+        select MAX(userid) uid from
+        <include refid="usersTable"></include>
+    </select>
+    <!-- 通过userid获取数据 -->
+    <select id="findByUserid" parameterType="pd" resultType="Users">
+        SELECT ui.userid as userid,
+        loginid,
+        password,
+        username,
+        ui.note as note,
+        ui.RoleId as RoleId,
+        ui.isuse as isuse,
+        r.RoleName as RoleName,
+        menurights,
+        realcasttype
+        from
+        <include refid="usersTable"/>
+        ui
+        LEFT JOIN
+        <include refid="roleTable"/>
+        r on ui.RoleId = r.RoleId
+        where
+        ui.userid = #{userid} and ui.type = 1
+    </select>
+</mapper>

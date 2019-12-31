@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+
+    <resultMap type="Menu" id="menuResultMap">
+        <id column="mid" property="mid"/>
+        <result column="parentmid" property="parentmid"/>
+        <result column="mlevel" property="mlevel"/>
+        <result column="mname" property="mname"/>
+        <result column="mintroduce" property="mintroduce"/>
+        <result column="murl" property="murl"/>
+        <result column="micon" property="micon"/>
+        <result column="isopen" property="isopen"/>
+        <result column="refresh" property="refresh"/>
+        <result column="isenabled" property="isenabled"/>
+        <result column="note" property="note"/>
+    </resultMap>
+    <!--表名 -->
+    <sql id="tableName">
+        menu
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        mid,
+        parentmid,
+        mlevel,
+        mname,
+        mintroduce,
+        murl,
+        micon,
+        isopen,
+        isenabled,
+        note,
+        refresh
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{mid},
+        #{parentmid},
+        #{mlevel},
+        #{mname},
+        #{mintroduce},
+        #{murl},
+        #{micon},
+        #{isopen},
+        #{isenabled},
+        #{note},
+        #{refresh}
+    </sql>
+
+    <!--通过ID获取其子一级菜单 -->
+    <select id="listSubMenuByParentId" parameterType="String" resultMap="menuResultMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where parentmid = #{parentmid} order by (mid+0)
+    </select>
+
+    <!--通过菜单ID获取数据 -->
+    <select id="getMenuById" parameterType="pd" resultType="pd">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where mid=#{mid}
+    </select>
+
+    <!--取最大ID-->
+    <select id="findMaxId" parameterType="pd" resultType="pd">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+    </select>
+
+</mapper>

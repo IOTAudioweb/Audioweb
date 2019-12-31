@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PalyListMapper">
+
+    <!-- 字段 -->
+    <sql id="Field">
+        playid,
+        playname,
+        palypath,
+        palymusic,
+        note
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{playid},
+        #{playname},
+        #{palypath},
+        #{palymusic},
+        #{note}
+    </sql>
+    <!--表名 -->
+    <sql id="tableName">
+        playlist
+    </sql>
+
+    <!-- 查找全部音频列表 -->
+    <select id="getAlllistPage" parameterType="page" resultType="PlayList">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        order by playid desc
+    </select>
+    <!-- 存储音频列表 -->
+    <insert id="savePlayList" parameterType="PlayList">
+        insert into
+        <include refid="tableName"></include>
+        (
+        playname,
+        palypath,
+        palymusic,
+        note
+        ) values (
+        #{playname},
+        #{palypath},
+        #{palymusic},
+        #{note}
+        )
+    </insert>
+    <!-- 修改 -->
+    <update id="editPlayList" parameterType="PlayList">
+        update
+        <include refid="tableName"/>
+        set
+        <if test="playname != null and playname != ''">
+            playname = #{playname}
+        </if>
+        <if test="palypath != null and palypath != ''">
+            ,palypath = #{palypath}
+        </if>
+        <if test="palymusic != null and palymusic != ''">
+            ,palymusic = #{palymusic}
+        </if>
+        <if test="note != null and note != ''">
+            ,note = #{note}
+        </if>
+        where
+        playid = #{playid}
+    </update>
+    <!-- 删除列表 -->
+    <delete id="deletePlayList" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where playid = #{playid}
+    </delete>
+</mapper>

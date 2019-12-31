@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DomainsMapper">
+
+    <!-- ztree -->
+    <resultMap type="Domains" id="DomainsZtreeResultMap">
+        <id column="ParentDomainId" property="ParentDomainId"/>
+        <id column="DomainId" property="DomainId"/>
+        <result column="DomainName" property="DomainName"></result>
+    </resultMap>
+    <!-- 字段 -->
+    <sql id="Field">
+        DomainId,
+        ParentDomainId,
+        DomainName,
+        isuse
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{DomainId},
+        #{ParentDomainId},
+        #{DomainName},
+        1
+    </sql>
+
+    <!--表名 -->
+    <sql id="tableName">
+        domains
+    </sql>
+
+    <!--通过ID获取分区 -->
+    <select id="getDomainsByDid" parameterType="String" resultType="Domains">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where DomainId = #{DomainId}
+        and isuse = 1
+    </select>
+    <!--通过ID获取其子一级分区 -->
+    <select id="listSubDomainIdByParentDomainId" parameterType="String" resultMap="DomainsZtreeResultMap">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where ParentDomainId = #{ParentDomainId}
+        and isuse = 1
+    </select>
+    <!--通过ID获取其所有子级分区 -->
+    <select id="listAllDomainIdByParentDomainId" parameterType="String" resultType="Domains">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where t.DomainId like CONCAT(#{DomainId},"%")
+        and isuse = 1
+    </select>
+    <!--查询所有分区列表 -->
+    <select id="listAllDomains" parameterType="String" resultType="Domains">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where isuse = 1
+        ORDER BY DomainId asc
+    </select>
+
+    <!--取最大ID-->
+    <select id="findCurLevelMaxId" parameterType="pd" resultType="pd">
+        select MAX(DomainId) DOMAINID from
+        <include refid="tableName"></include>
+        where ParentDomainId = #{ParentDomainId}
+    </select>
+    <!--新增区域 -->
+    <insert id="insertDomains" parameterType="Domains">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!--隐藏式删除区域-->
+    <update id="deleteDomainsByDomainId" parameterType="String">
+        update
+        <include refid="tableName"></include>
+        set isuse = 0
+        where DomainId=#{DomainId}
+    </update>
+
+    <!--编辑区域 -->
+    <update id="updateDomains" parameterType="pd">
+        update
+        <include refid="tableName"></include>
+        set ParentDomainId=#{ParentDomainId},
+        DomainName=#{DomainName}
+        where
+        DomainId=#{DomainId}
+    </update>
+    <!--通过分区名称获取分区-->
+    <select id="listAllDomainByIds" parameterType="pd" resultType="Domains">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        <where>
+            isuse = 1
+            <choose>
+                <when test="ids !=null and ids !='' and ids.size>0">
+                    and DomainName in
+                    <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+                        '${item}'
+                    </foreach>
+                </when>
+                <otherwise>and DomainName is null</otherwise>
+            </choose>
+        </where>
+    </select>
+</mapper>
