@@ -393,7 +393,7 @@
 			      }
 			  });
 		}
-		<%-- function Reboot(msg,is){
+		 function Reboot(msg,is){
 			 layer.confirm(msg, {
 				  btn: ['确定','取消'] //按钮
 				  ,anim: 6 
@@ -423,7 +423,7 @@
 							time:1000
 			        });
 				});
-		} --%>
+		}
 	</script>
 </body>
 </html>
