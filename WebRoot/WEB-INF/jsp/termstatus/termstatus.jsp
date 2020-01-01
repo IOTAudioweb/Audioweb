@@ -79,12 +79,12 @@
 										</button>
 									</div>
 								</c:if>
-								<%-- <c:if test="${user  == '1'}">
+								 <c:if test="${user  == '1'}">
 									<div class="layui-inline">
 										<button title="重启全部终端" class="layui-btn  layui-btn-radius layui-btn-normal layui-btn-danger" onclick="Reboot('请确认是否重启全部在线终端，这将会导致终端退出任务等情况',false)" >重启全部终端
 										</button>
 									</div>
-								</c:if> --%>
+								</c:if>
 								<!-- <div class="layui-inline">
 									<button type="button" class="layui-btn  demo-active layui-btn-danger" data-type="domainselect">选择终端分组</button> 
 								</div> -->
